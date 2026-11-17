@@ -1,0 +1,9 @@
+flowchart LR
+    Client[Cliente HTTP] -->|POST /users, JSON name| Express[Adaptador de entrada: Express]
+    Express -->|execute input| InPort[Porta de entrada: CreateUserUseCase]
+    InPort --> UseCase[Caso de uso: CreateUserUseCaseImpl]
+    UseCase -->|save User| OutPort[Porta de saída: UserRepository]
+    OutPort -->|implementa| Repository[Adaptador de saída: InMemoryUserRepository]
+    Repository -->|push e leitura| Memory[(Array em memória)]
+    UseCase -->|usa| Domain[Core: User]
+    Express -->|201 com usuário ou 400| Client
